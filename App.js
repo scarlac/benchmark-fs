@@ -5,6 +5,7 @@ import Constants from 'expo-constants';
 import * as Efs from 'expo-file-system';
 import * as Rnfs from 'react-native-fs';
 import RnBlobUtil from 'react-native-blob-util';
+import {FileSystem as Rnfa} from 'react-native-file-access';
 
 const dummyData = 'x'.repeat(5000000);
 
@@ -55,6 +56,22 @@ async function writeRnfs() {
   console.log('writeRnfs avg', getAverage(measurements));
 }
 
+async function writeRnfa() {
+  const measurements = [];
+  for (let i = 0; i < 10; i++) {
+    const start = Date.now();
+    await Rnfa.writeFile(
+      outputPath,
+      dummyData,
+      'utf8'
+    );
+    measurements.push(Date.now() - start);
+    console.log('writeRnfa, ms: ', measurements.slice(-1)[0]);
+  }
+  console.log('writeRnfa median', getMedian(measurements));
+  console.log('writeRnfa avg', getAverage(measurements));
+}
+
 async function writeRnBlobUtil() {
   const measurements = [];
   for (let i = 0; i < 10; i++) {
@@ -79,6 +96,7 @@ export default function App() {
       <Button title='Write data with Expo File System' onPress={writeEfs} />
       <Button title='Write data with React Native FS' onPress={writeRnfs} />
       <Button title='Write data with React Native Blob Util' onPress={writeRnBlobUtil} />
+      <Button title='Write data with React Native File Access' onPress={writeRnfa} />
     </View>
   );
 }

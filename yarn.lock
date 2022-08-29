@@ -5377,6 +5377,11 @@ react-native-codegen@^0.0.17:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
+react-native-file-access@^2.4.5:
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/react-native-file-access/-/react-native-file-access-2.4.5.tgz#d3306f92ec5586f53f580fb6679b98dbca941b65"
+  integrity sha512-/bWVSpIwPeseYil4aHm8lx52mvrNOXAvdyW9Cdo8RT5qV+vxRADnrcyPC3sQN5eqAuhcS0eZszUZ/DUpCURjFQ==
+
 react-native-fs@^2.20.0:
   version "2.20.0"
   resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.20.0.tgz#05a9362b473bfc0910772c0acbb73a78dbc810f6"

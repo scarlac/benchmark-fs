@@ -6,20 +6,22 @@ Benchmark of various React Native filesystem libraries:
 
 ## iOS Simulator on an M1 Macbook Pro, running macOS 12.4 (21F79)
 ```
-| library                | milliseconds, median (aka p50) |
-|------------------------+--------------------------------|
-| expo-file-system       |                           43.5 |
-| react-native-fs        |                          217.0 |
-| react-native-blob-util |                             43 |
+| library                  | milliseconds, median (aka p50) |
+|--------------------------+--------------------------------|
+| expo-file-system         |                             28 |
+| react-native-fs          |                            228 |
+| react-native-blob-util   |                             31 |
+| react-native-file-access |                             24 |
 ```
 
 ## Samsung Galaxy S21 (SG-G991U), Android 12
 ```
-| library                | milliseconds, median (aka p50) |
-|------------------------+--------------------------------|
-| expo-file-system       |                           47.0 |
-| react-native-fs        |                          937.0 |
-| react-native-blob-util |                           34.0 |
+| library                  | milliseconds, median (aka p50) |
+|--------------------------+--------------------------------|
+| expo-file-system         |                             25 |
+| react-native-fs          |                            300 |
+| react-native-blob-util   |                             25 |
+| react-native-file-access |                             32 |
 ```
 
 ## Conclusion

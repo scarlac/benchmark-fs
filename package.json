@@ -17,6 +17,7 @@
     "react-dom": "17.0.2",
     "react-native": "0.68.2",
     "react-native-blob-util": "^0.16.2",
+    "react-native-file-access": "^2.4.5",
     "react-native-fs": "^2.20.0",
     "react-native-web": "0.17.7"
   },
