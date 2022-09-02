@@ -1,3 +1,5 @@
+![Screen shot of the benchmarking app](screenshot.jpg)
+
 # React Native Filesystem Libraries Comparison
 
 ## Test Setup
