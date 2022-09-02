@@ -68,6 +68,17 @@ So, "is Hermes faster"? If you use redux-persist or otherwise read/write JSON da
 ## Test Setup
 
 Run on an Apple M1 Pro, Macbook Pro, running macOS 12.5.1 (21G83)
+Example runs:
+```
+# Hermes (https://github.com/facebook/hermes/releases/tag/v0.12.0)
+$ ~/Downloads/hermes-cli-darwin-v0.12.0/hermes cli-test.js
+
+# JavaScriptCore (JSC)
+$ /System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc cli-test.js
+
+# NodeJS
+$ node cli-test.js
+```
 
 ## Results
 ```
