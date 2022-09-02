@@ -1,6 +1,6 @@
-![Screen shot of the benchmarking app](screenshot.jpg)
-
 # React Native Filesystem Libraries Comparison
+
+![Screen shot of the benchmarking app](screenshot.jpg)
 
 ## Test Setup
 A ~5 MB file is written 10 times to disk on every button press.
@@ -8,7 +8,7 @@ A ~5 MB file is written 10 times to disk on every button press.
 ## Results
 Benchmark of various React Native filesystem libraries:
 
-## iOS Simulator on an M1 Macbook Pro, running macOS 12.4 (21F79)
+## iOS Simulator on an Apple M1 Pro, Macbook Pro, running macOS 12.4 (21F79)
 ```
 | library                  | milliseconds, median (aka p50) |
 |--------------------------+--------------------------------|
@@ -62,3 +62,34 @@ Hermes improves app startup speed (confirmed separately) and these tests show th
 JSC wins out in JSON parsing (30% faster), a very common use case for modern apps.  
 
 So, "is Hermes faster"? If you use redux-persist or otherwise read/write JSON data frequently, the answer is likely no. If you don't, you should be fine and Hermes should be an overall win.
+
+## Notes
+
+You can run cli-test.js for an isolated comparison of JSC versus Hermes locally:
+`/System/iOSSupport/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc cli-test.js`
+and compare the output to:
+`hermes-cli-darwin-v0.12.0/hermes cli-test.js`
+In my tests on an Apple M1 Pro I saw that JSC was 75% faster.
+
+# Command Line Test (cli-test.js)
+
+## Test Setup
+
+Run on an Apple M1 Pro, Macbook Pro, running macOS 12.5.1 (21G83)
+
+## Results
+```
+| Engine                  | Method                 | Result |
+|-------------------------+------------------------+--------|
+| Hermes v0.12.0          | parseJson median       |   50.0 |
+| Hermes v0.12.0          | parseJson avg          |   54.5 |
+| JSC                     | parseJson median       |   15.0 |
+| JSC                     | parseJson avg          |   16.6 |
+| NodeJS v16.13.2         | parseJson median       |   15.0 |
+| NodeJS v16.13.2         | parseJson avg          |   15.4 |
+```
+(lower is better)
+
+### Conclusion
+
+JSC and NodeJS are 70% faster than Hermes at using JSON.parse().
