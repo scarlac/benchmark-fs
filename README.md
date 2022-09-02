@@ -63,14 +63,6 @@ JSC wins out in JSON parsing (30% faster), a very common use case for modern app
 
 So, "is Hermes faster"? If you use redux-persist or otherwise read/write JSON data frequently, the answer is likely no. If you don't, you should be fine and Hermes should be an overall win.
 
-## Notes
-
-You can run cli-test.js for an isolated comparison of JSC versus Hermes locally:
-`/System/iOSSupport/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc cli-test.js`
-and compare the output to:
-`hermes-cli-darwin-v0.12.0/hermes cli-test.js`
-In my tests on an Apple M1 Pro I saw that JSC was 75% faster.
-
 # Command Line Test (cli-test.js)
 
 ## Test Setup
