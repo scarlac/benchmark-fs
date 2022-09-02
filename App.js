@@ -2,14 +2,43 @@ import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 import Constants from 'expo-constants';
-import * as Efs from 'expo-file-system';
+import * as Exfs from 'expo-file-system';
 import * as Rnfs from 'react-native-fs';
 import RnBlobUtil from 'react-native-blob-util';
 import {FileSystem as Rnfa} from 'react-native-file-access';
 
-const dummyData = 'x'.repeat(5000000);
+let dummyData = '{';
+// 1 iteration generates roughly 1000 bytes, so 1000 iterations is ~1 MB
+for (let i = 1; i <= 10000; i++) {
+  dummyData += `
+  "product_${i}": {
+    "id": ${i},
+    "title": "perfume Oil",
+    "description": "Mega Discount, Impression of Lorem ipsum dolor sit amet",
+    "price": ${Math.round(Math.random() * 100)},
+    "discountPercentage": 8.4,
+    "rating": ${Math.round(Math.random() * 10)},
+    "stock": ${Math.round(Math.random() * 100)},
+    "brand": "Impression of Acqua Di Gio",
+    "category": "fragrances",
+    "thumbnail": "https://dummyjson.com/image/i/products/${i}/thumbnail.jpg",
+    "images": [
+      "https://dummyjson.com/image/i/products/11/1.jpg",
+      "https://dummyjson.com/image/i/products/11/2.jpg",
+      "https://dummyjson.com/image/i/products/11/3.jpg",
+      "https://dummyjson.com/image/i/products/11/4.jpg",
+      "https://dummyjson.com/image/i/products/11/5.jpg",
+      "https://dummyjson.com/image/i/products/11/6.jpg",
+      "https://dummyjson.com/image/i/products/11/7.jpg",
+      "https://dummyjson.com/image/i/products/11/8.jpg",
+      "https://dummyjson.com/image/i/products/11/9.jpg",
+      "https://dummyjson.com/image/i/products/11/10.jpg"
+    ]
+  },`;
+}
+dummyData += '"end": {}}';
 
-const outputPath = `${Efs.cacheDirectory}dummy-data.txt`;
+const outputPath = `${Exfs.cacheDirectory}dummy-data.txt`;
 console.log('outputPath', outputPath);
 
 function getMedian(values = []) {
@@ -24,20 +53,51 @@ function getAverage(values = []) {
 }
 
 
-async function writeEfs() {
+async function writeExfs() {
   const measurements = [];
   for (let i = 0; i < 10; i++) {
     const start = Date.now();
-    await Efs.writeAsStringAsync(
+    await Exfs.writeAsStringAsync(
       outputPath,
       dummyData,
       { encoding: 'utf8' }
     );
     measurements.push(Date.now() - start);
-    console.log('writeEfs, ms: ', measurements.slice(-1)[0]);
+    console.log('writeExfs, ms: ', measurements.slice(-1)[0]);
   }
-  console.log('writeEfs median', getMedian(measurements));
-  console.log('writeEfs avg', getAverage(measurements));
+  console.log('writeExfs median', getMedian(measurements));
+  console.log('writeExfs avg', getAverage(measurements));
+}
+
+async function readExfs() {
+  const measurements = [];
+  for (let i = 0; i < 10; i++) {
+    const start = Date.now();
+    await Exfs.readAsStringAsync(
+      outputPath,
+      { encoding: 'utf8' }
+    );
+    measurements.push(Date.now() - start);
+    console.log('readExfs, ms: ', measurements.slice(-1)[0]);
+  }
+  console.log('readExfs median', getMedian(measurements));
+  console.log('readExfs avg', getAverage(measurements));
+}
+
+async function readExfsJson() {
+  const measurements = [];
+  for (let i = 0; i < 10; i++) {
+    const start = Date.now();
+    // Read and parse text as JSON, but discard resulting object
+    JSON.parse(await Exfs.readAsStringAsync(
+      outputPath,
+      { encoding: 'utf8' }
+    ));
+    measurements.push(Date.now() - start);
+    console.log('readExfsJson, ms: ', measurements.slice(-1)[0]);
+  }
+  console.log('readExfsJson median', getMedian(measurements));
+  console.log('readExfsJson avg', getAverage(measurements));
 }
 
 async function writeRnfs() {
@@ -93,10 +153,15 @@ export default function App() {
     <View style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
-      <Button title='Write data with Expo File System' onPress={writeEfs} />
+      <Button title='Write data with Expo File System' onPress={writeExfs} />
       <Button title='Write data with React Native FS' onPress={writeRnfs} />
       <Button title='Write data with React Native Blob Util' onPress={writeRnBlobUtil} />
       <Button title='Write data with React Native File Access' onPress={writeRnfa} />
+
+      <View style={{ marginTop: 24 }}>
+        <Button title='Read data as text with Expo File System' onPress={readExfs} />
+        <Button title='Read data as JSON with Expo File System' onPress={readExfsJson} />
+      </View>
     </View>
   );
 }
