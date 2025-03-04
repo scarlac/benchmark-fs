@@ -36,9 +36,8 @@ Benchmark of various React Native filesystem libraries:
 # React Native Engine Benchmark: Hermes vs JSC
 
 ## Samsung Galaxy S21 (SG-G991U), Android 12
-```
 | Engine                  | Method                 | Result |
-|-------------------------+------------------------+--------|
+| ----------------------- | ---------------------- | ------ |
 | Hermes                  | readExfs median        |   65.0 |
 | Hermes                  | readExfs avg           |   62.2 |
 | JSC                     | readExfs median        |   86.0 |
@@ -47,7 +46,7 @@ Benchmark of various React Native filesystem libraries:
 | Hermes                  | readExfsJson avg       |  176.2 |
 | JSC                     | readExfsJson median    |  122.0 |
 | JSC                     | readExfsJson avg       |  120.4 |
-```
+
 (lower is better)
 
 ## Test Setup
@@ -80,17 +79,23 @@ $ /System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/j
 $ node cli-test.js
 ```
 
+
 ## Results
-```
 | Engine                  | Method                 | Result |
-|-------------------------+------------------------+--------|
+| ----------------------- | ---------------------- | ------ |
 | Hermes v0.12.0          | parseJson median       |   50.0 |
 | Hermes v0.12.0          | parseJson avg          |   54.5 |
+| Hermes hermes-2025-01-13-RNv0.78.0-a942ef374897d85da38e9c8904574f8376555388          | parseJson median        |   43.0 |
+| Hermes hermes-2025-01-13-RNv0.78.0-a942ef374897d85da38e9c8904574f8376555388          | parseJson avg           |   42.7 |
 | JSC                     | parseJson median       |   15.0 |
 | JSC                     | parseJson avg          |   16.6 |
 | NodeJS v16.13.2         | parseJson median       |   15.0 |
 | NodeJS v16.13.2         | parseJson avg          |   15.4 |
-```
+| NodeJS v16.13.2         | parseJson median       |   15.0 |
+| NodeJS v16.13.2         | parseJson avg          |   15.4 |
+| NodeJS v20.11.1         | parseJson median       |   13.0 |
+| NodeJS v20.11.1         | parseJson avg          |   14.3 |
+
 (lower is better)
 
 ### Conclusion
