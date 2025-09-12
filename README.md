@@ -66,11 +66,11 @@ So, "is Hermes faster"? If you use redux-persist or otherwise read/write JSON da
 
 ## Test Setup
 
-Run on an Apple M1 Pro, Macbook Pro, running macOS 12.5.1 (21G83)
 Example runs:
 ```
-# Hermes (https://github.com/facebook/hermes/releases/tag/v0.12.0)
-$ ~/Downloads/hermes-cli-darwin-v0.12.0/hermes cli-test.js
+# Hermes 2025-09-01 (https://github.com/facebook/hermes/releases/tag/hermes-2025-09-01-RNv0.82.0-265ef62ff3eb7289d17e366664ac0da82303e101)
+$ ~/Developer/hermes_workingdir/build_release/bin/hermes -emit-binary -out cli-test.hbc cli-test.js
+$ ~/Developer/hermes_workingdir/build_release/bin/hermes cli-test.hbc
 
 # JavaScriptCore (JSC)
 $ /System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc cli-test.js
@@ -79,8 +79,26 @@ $ /System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/j
 $ node cli-test.js
 ```
 
+## Results, M4 Pro
 
-## Results
+Run on an Apple M4 Pro, 48 GB Unified Memory, Macbook Pro, running macOS 15.6 (24G84)
+
+| Engine                  | Method                 | Result |
+| ----------------------- | ---------------------- | ------ |
+| Hermes 2025-09-01       | parseJson median       |   26.0 |
+| Hermes 2025-09-01       | parseJson avg          |   28.6 |
+| NodeJS v20.19.4         | parseJson median       |    9.0 |
+| NodeJS v20.19.4         | parseJson avg          |   10.0 |
+| JSC                     | parseJson median       |    6.0 |
+| JSC                     | parseJson avg          |    7.3 |
+| Deno                    | parseJson median       |    8.0 |
+| Deno                    | parseJson avg          |    8.8 |
+
+(lower is better)
+
+## Results, M1 Pro
+Run on an Apple M1 Pro, 16 GB Unified Memory, Macbook Pro, running macOS 12.5.1 (21G83)
+
 | Engine                  | Method                 | Result |
 | ----------------------- | ---------------------- | ------ |
 | Hermes v0.12.0          | parseJson median       |   50.0 |
@@ -100,4 +118,4 @@ $ node cli-test.js
 
 ### Conclusion
 
-JSC and NodeJS are 70% faster than Hermes at using JSON.parse().
+Hermes is ~3x slower than JSC and NodeJS for JSON.parse() on 1M payloads.
